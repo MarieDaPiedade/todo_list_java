@@ -14,6 +14,8 @@ import javax.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +23,7 @@ import com.dapiedade.todo_list_java.model.Todo;
 import com.dapiedade.todo_list_java.service.TodoService;
 
 @RestController
-@RequestMapping("/todos")
+@RequestMapping("/api")
 public class TodoController {
 
     private TodoService todoService;
@@ -61,10 +63,20 @@ public class TodoController {
             for (ConstraintViolation<?> c : constraintViolations) {
                 errors.put(c.getPropertyPath().toString(), c.getMessage());
             }
-            return -1; // TODO envoyer le message au front
+            return -1;
         }
     }
 
-    /* DELETE */
+    /* UPDATE */
+
+    @PutMapping("/update/{id}")
+    public boolean updateStateTodo(@PathVariable("id") long id, @RequestBody Todo todo) {
+        try {
+            todoService.update(id, todo);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

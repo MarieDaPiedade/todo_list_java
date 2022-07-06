@@ -14,5 +14,7 @@ public interface TodoService {
 
     public long save(Todo todo);
 
+    public void update(long id, Todo todo);
+
     public void delete(long id);
 }
