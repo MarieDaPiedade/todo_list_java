@@ -1,5 +1,6 @@
 package com.dapiedade.todo_list_java.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,11 @@ public class TodoController {
     @GetMapping("/")
     public List<Todo> getAllTodos() {
         try {
-            return todoService.getAll();
+            List<Todo> list = new ArrayList<>();
+            for(Todo t : todoService.getAll()) {
+                list.add(t);
+            }
+            return list;
         } catch (Exception e) {
             return Collections.emptyList(); // à revoir ?
         }
