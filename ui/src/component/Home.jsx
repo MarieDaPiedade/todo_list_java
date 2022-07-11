@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import Header from './Header'
 
 export default function Home() {
@@ -30,6 +31,7 @@ const getTodos = () => {
   return (
     <>
       <Header />
+      <Toaster />
       <div className="w-50 m-auto d-flex justify-content-end mb-5 mt-5">
         <a
           className="btn btn-info btn-lg text-white"
@@ -73,7 +75,7 @@ const getTodos = () => {
                 </div>
               </>
             </div>
-          ))}
+          )).reverse()}
         </ul>
       )}
     </>
