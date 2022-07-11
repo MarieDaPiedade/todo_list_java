@@ -12,6 +12,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "simple-react-validator": "^1.6.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -20,7 +21,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8080/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -38,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "webpack": "^5.73.0"
   }
 }
