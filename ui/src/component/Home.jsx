@@ -5,32 +5,57 @@ export default function Home() {
 
 /* STATES */
 
-const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+//const [error, setError] = useState(null);
+ // const [isLoading, setLoading] = useState(true);
+ // const [data, setData] = useState([]);
   const [todos, setTodos] = useState([]);
 
 /* EFFECTS */
 
 
-const getDatas = () => {
-    const headers = {'Content-Type': 'application/json'};
-        let URL = "http://localhost:8080/api/";
-        fetch(URL, headers)
-        .then(response => console.log(response.json()))
-        .then(
-            (data) => {
-                setIsLoaded(true);
-                setTodos(data.todos);
-                console.log(data);
-            },
-            (error) => {
-                setIsLoaded(true);
-                setError(error);
-            }
-            )
-        }
+// const getDatas = () => {
+//     const headers = {'Content-Type': 'application/json'};
+//     const URL = "http://localhost:8080/api/";
+//      fetch(URL, headers)
+//         .then(response => console.log(response.json()))
+//         .then(
+//             json => {
+//                 setIsLoaded(true);
+//                 setTodos(json.todos);
+//                 console.log(json);
+//             },
+//             error => {
+//                 setIsLoaded(true);
+//                 setError(error);
+//             }
+//             )
+//         }
 
-        useEffect(getDatas, []);
+//  const getTodos = async () => {
+//     const URL = "http://localhost:8080/api/";
+//      try {
+//       const response = await fetch(URL);
+//       const json = await response.json();
+//       setData(json.todos);
+//     } catch (error) {
+//       console.error(error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+const getTodos = async () => {
+    const response = await fetch(
+      "http://localhost:8080/api"
+    ).then((response) => response.json());
+    setTodos(response.response);
+    console.log(response.response);
+    console.log('ok');
+  };
+
+        useEffect(() => {
+            getTodos()
+        }, []);
 
 
   /* VIEW */
@@ -42,13 +67,12 @@ const getDatas = () => {
 		    <a className="btn btn-info btn-lg text-white" href="/save" role="button">CRÉER UNE TODO</a>
 	    </div>
 
-        <ul className="list-group list-group-flush w-50 m-auto mb-5">
-            {error && error.message} 
-            {!isLoaded ? "Chargement..." :
+        {/* <ul className="list-group list-group-flush w-50 m-auto mb-5">
+            {!isLoading ? "Chargement..." :
 
             <div className="list-group-item list-group-item-action p-4 d-flex justify-content-between">
 				<div className="a">
-                    {todos.map(todo => (
+                    {data.map(todo => (
                         <a key={todo.title} todo={todo} href="" target='_blank' className="title text-info">
                             {todo.title} 
                         </a>
@@ -60,9 +84,18 @@ const getDatas = () => {
 						Todo terminée
 					</label>
 				</div>
-			</div>}
-                
-        </ul> 
+			</div>}  
+        </ul>  */}
+        <div className="app">
+      {todos &&
+        todos.map((todo) => (
+          <div className="item-container">
+            Id:{todo.id} <div className="title">Title:{todo.title}</div>
+          </div>
+        ))}
+    </div>
+
+     
     </>
   )}
     

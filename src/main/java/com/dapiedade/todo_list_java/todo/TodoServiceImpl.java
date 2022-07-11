@@ -1,13 +1,10 @@
-package com.dapiedade.todo_list_java.service;
+package com.dapiedade.todo_list_java.todo;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.dapiedade.todo_list_java.model.Todo;
-import com.dapiedade.todo_list_java.repository.TodoRepository;
 
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -51,5 +48,26 @@ public class TodoServiceImpl implements TodoService {
         todoRepository.deleteById(id);
     }
 
+    @Override
+    public TodoDTO todoToDto(Todo todo) {
+        TodoDTO tdto = new TodoDTO();
+        tdto.setId(todo.getId());
+        tdto.setTitle(todo.getTitle());
+        tdto.setState(todo.getState());
+        tdto.setDescription(todo.getDescription());
+
+        return tdto;
+    }
+
+    @Override
+    public Todo dtoToTodo(TodoDTO tdto) {
+        Todo t = new Todo();
+        t.setId(tdto.getId());
+        t.setTitle(tdto.getTitle());
+        t.setState(tdto.getState());
+        t.setDescription(tdto.getDescription());
+
+        return t;
+    }
 
 }

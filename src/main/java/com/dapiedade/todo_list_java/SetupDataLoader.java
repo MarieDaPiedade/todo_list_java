@@ -7,8 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.dapiedade.todo_list_java.model.Todo;
-import com.dapiedade.todo_list_java.repository.TodoRepository;
+import com.dapiedade.todo_list_java.todo.Todo;
+import com.dapiedade.todo_list_java.todo.TodoRepository;
 
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {

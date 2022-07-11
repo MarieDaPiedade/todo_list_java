@@ -1,4 +1,4 @@
-package com.dapiedade.todo_list_java.controller;
+package com.dapiedade.todo_list_java.todo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +12,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,23 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dapiedade.todo_list_java.model.Todo;
-import com.dapiedade.todo_list_java.service.TodoService;
-
 @RestController
 @RequestMapping("/api")
 public class TodoController {
 
     private TodoService todoService;
 
+
     /* READ */
 
-    @GetMapping("/")
-    public List<Todo> getAllTodos() {
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping
+    public List<TodoDTO> getAllTodos() {
         try {
-            List<Todo> list = new ArrayList<>();
-            for(Todo t : todoService.getAll()) {
-                list.add(t);
+            List<TodoDTO> list = new ArrayList<>();
+            for (Todo t : todoService.getAll()) {
+                list.add(todoService.todoToDto(t));
             }
             return list;
         } catch (Exception e) {
@@ -44,10 +44,11 @@ public class TodoController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/get/{id}")
-    public Todo getATodo(@PathVariable("id") long id) {
+    public TodoDTO getATodo(@PathVariable("id") long id) {
         try {
-            return todoService.get(id);
+            return todoService.todoToDto(todoService.get(id));
         } catch (Exception e) {
             return null;
         }
@@ -55,14 +56,15 @@ public class TodoController {
 
     /* CREATE */
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/save")
-    public long saveTodo(Todo todo) {
-        todo.setState("Todo");
+    public long saveTodo(@RequestBody TodoDTO todoDto) {
+        todoDto.setState("Todo");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Todo>> constraintViolations = validator.validate(todo);
+        Set<ConstraintViolation<Todo>> constraintViolations = validator.validate(todoService.dtoToTodo(todoDto));
         if (constraintViolations.isEmpty()) {
-            return todoService.save(todo);
+            return todoService.save(todoService.dtoToTodo(todoDto));
         } else {
             Map<String, String> errors = new HashMap<>();
             for (ConstraintViolation<?> c : constraintViolations) {
@@ -74,10 +76,11 @@ public class TodoController {
 
     /* UPDATE */
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/update/{id}")
-    public boolean updateStateTodo(@PathVariable("id") long id, @RequestBody Todo todo) {
+    public boolean updateStateTodo(@PathVariable("id") long id, @RequestBody TodoDTO todoDto) {
         try {
-            todoService.update(id, todo);
+            todoService.update(id, todoService.dtoToTodo(todoDto));
             return true;
         } catch (Exception e) {
             return false;

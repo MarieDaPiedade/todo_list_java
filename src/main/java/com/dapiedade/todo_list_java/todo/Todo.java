@@ -1,4 +1,4 @@
-package com.dapiedade.todo_list_java.model;
+package com.dapiedade.todo_list_java.todo;
 
 import java.io.Serializable;
 
