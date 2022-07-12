@@ -76,6 +76,7 @@ public class TodoController {
     @PutMapping("/update/{id}")
     public boolean updateStateTodo(@PathVariable("id") long id, @RequestBody TodoDTO todoDto) {
         try {
+            todoDto.setState("Completed");
             todoService.update(id, todoService.dtoToTodo(todoDto));
             return true;
         } catch (Exception e) {

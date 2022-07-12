@@ -8,9 +8,11 @@ import * as Yup from "yup";
 
 export default function AddTodo() {
 
-  /* EFFECTS */
-  
+  /* STATES */
+
   let navigate = useNavigate();
+
+  /* EFFECTS */
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -38,8 +40,11 @@ export default function AddTodo() {
       })
       .then((response) => {
         console.log(response);
-          navigate("/");
-          success();
+        navigate("/");
+        success();
+      })
+      .catch((error) => {
+        console.error("Une erreur est survenue", error);
       });
   };
 
