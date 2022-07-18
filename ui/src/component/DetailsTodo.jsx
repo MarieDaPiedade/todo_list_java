@@ -16,7 +16,6 @@ export default function DetailsTodo() {
       .then((response) => response.json())
       .then((data) => {
         setTodo(data);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Une erreur est survenue", error);

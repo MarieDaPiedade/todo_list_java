@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "./Header";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,6 +11,13 @@ export default function AddTodo() {
   /* STATES */
 
   let navigate = useNavigate();
+  const URL = "http://localhost:8080/api/";
+
+  const initialValues = {
+    title: "",
+    state: "Todo",
+    description: "",
+  };
 
   /* EFFECTS */
 
@@ -22,16 +29,9 @@ export default function AddTodo() {
     description: Yup.string(),
   });
 
-  const initialValues = {
-    title: "",
-    state: "Todo",
-    description: "",
-  };
-
   const success = () => toast.success("Todo ajoutée avec succès !");
 
   const handleSubmit = (values) => {
-    let URL = "http://localhost:8080/api/";
     axios
       .post(URL + "save", {
         title: values.title,
@@ -49,6 +49,7 @@ export default function AddTodo() {
   };
 
   /* VIEW */
+
   return (
     <>
       <Header />
@@ -109,6 +110,11 @@ export default function AddTodo() {
               >
                 ANNULER
               </button>
+              <Link to="/">
+                <div className="btn btn-lg float-end mt-5 font-weight-bold">
+                  RETOUR
+                </div>
+              </Link>
             </div>
           </Form>
         )}

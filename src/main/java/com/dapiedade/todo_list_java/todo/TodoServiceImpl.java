@@ -28,7 +28,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> getAllByState(String state) { // à revoir exception
+    public List<Todo> getAllByState(String state) { 
         return todoRepository.findAllByState(state);
     }
 
@@ -38,14 +38,10 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public void update(long id, Todo todo) {
-        todo.setId(id);
-        update(id, todo);
-    }
-
-    @Override
-    public void delete(long id) {
-        todoRepository.deleteById(id);
+    public Todo updateState(long id, Todo todo) {
+        Todo todoToUpdate = todoRepository.findById(id).get();
+        todoToUpdate.setState(todo.getState());
+        return todoRepository.save(todoToUpdate);
     }
 
     @Override
