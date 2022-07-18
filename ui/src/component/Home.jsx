@@ -11,8 +11,9 @@ export default function Home() {
   let [todos, setTodos] = useState([]);
   let [id, setId] = useState();
   let [checked, setChecked] = useState(false);
+  let [list, setList] = useState([]);
 
-  const props = { todos, setTodos, id, setId, checked, setChecked };
+  const props = { todos, setTodos, id, setId, checked, setChecked};
 
 /* EFFECTS */
 
@@ -30,6 +31,26 @@ const getTodos = () => {
         useEffect(() => {
             getTodos()
         }, []);
+
+  const onChange = (event, key) => {
+    console.log(checked);
+    if(event.target.checked) {
+      console.log('checkbox is checked');
+    } else {
+      console.log('checkbox is not checked');
+    }
+    setChecked(current => !current);
+    console.log(checked);
+    console.log(key);
+  }
+
+  const clickHandler = (e, todo) => {
+     setChecked(!checked);
+     console.log(checked);
+     console.log(e);
+    console.log(todo);
+  };
+
 
   /* VIEW */
 
@@ -69,10 +90,14 @@ const getTodos = () => {
                     </Link>
                   </div>
                   <CheckboxTodo
-                    {...props}
-                    todo={todo}
-                    onChange={(e) => setChecked(e.checked)}
-                    checked={checked}
+                   {...props}
+                    label="Todo terminée"
+                    key={todo.id}
+                    name={todo.title}
+                    id={todo.id}
+                    onChange={onChange}
+                    value={checked}
+                    onClick={(e) => clickHandler(e, todo)}
                   />
                 </div>
               ) : (

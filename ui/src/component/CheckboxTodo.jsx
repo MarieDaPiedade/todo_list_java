@@ -1,32 +1,24 @@
-import { React, useState } from 'react'
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { React } from 'react'
 
 export default function CheckboxTodo(props) {
-  let [todosChecked, setTodosChecked] = useState([]);
-  let [todo, setTodo] = useState([]);
- // let [todoToUpdate, setTodoToUpdate] = useState();
-  let navigate = useNavigate();
 
-   // const { idToUpdate } = useParams();
+  const { id, label, value, onChange} = props;
 
-  const { todos, setTodos, id, setId, checked, setChecked } = props;
+  // const handleChange = () => {
+  //  // setId(todo.id);
+  // // setTodo(e);
+  //   setChecked(!checked);
+  //   console.log(todo.id);
+  //   console.log(todo);
+  //   let selectedTodos = [...todosChecked];
+  //   if(todo.checked === true) {
 
-  const handleChange = () => {
-   // setId(todo.id);
-  // setTodo(e);
-    setChecked(!checked);
-    console.log(todo.id);
-    console.log(todo);
-    let selectedTodos = [...todosChecked];
-    if(todo.checked === true) {
-
-      selectedTodos.push(todo.id.value);
-    } else {
-      selectedTodos.splice(selectedTodos.indexOf(todo.id.value), 1);
-    }
-    setTodosChecked(selectedTodos);
-    console.log(selectedTodos);
+  //     selectedTodos.push(todo.id.value);
+  //   } else {
+  //     selectedTodos.splice(selectedTodos.indexOf(todo.id.value), 1);
+  //   }
+  //   setTodosChecked(selectedTodos);
+  //   console.log(selectedTodos);
   //   let URL = `http://localhost:8080/api/update/${id}`;
   //   // const todoToUpdate = {
   //   //    id: todo.id,
@@ -49,7 +41,7 @@ export default function CheckboxTodo(props) {
   //     .catch(error => {
   //       console.error("Une erreur est survenue", error);
   //     });
-  }
+ // }
 
   //  useEffect(() => {
   //    handleChange();
@@ -68,21 +60,15 @@ export default function CheckboxTodo(props) {
 
   return (
     <div className="form-check">
-      <label className="form-check-label" htmlFor="completed">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          checked={checked}
-          todo={todo}
-          value="Completed"
-          onChange={() => {
-            setId(todo.id);
-            setTodo(todo);
-            console.log(todo);
-            handleChange();
-          }}
-        ></input>
-        Todo terminée
+      <input
+        className="form-check-input"
+        id={id}
+        type="checkbox"
+        checked={value}
+        onChange={onChange}
+      />
+      <label className="form-check-label" htmlFor={id}>
+        {label}
       </label>
     </div>
   );
