@@ -11,10 +11,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 public class Todo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,5 +70,12 @@ public class Todo implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Todo(long id, String title, String state, String description) {
+    }
+
+    public Todo() {
+    }
+
 
 }

@@ -12,11 +12,12 @@ public class TodoServiceImpl implements TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
+
     @Override
     public Todo get(long id) {
         Optional<Todo> todoOption = todoRepository.findById(id);
         if (todoOption.isEmpty()) {
-            throw new NullPointerException();
+            throw new NullPointerException("La Todo demandée n'existe pas !");
         } else {
             return todoOption.get();
         }
@@ -27,10 +28,6 @@ public class TodoServiceImpl implements TodoService {
         return (List<Todo>) todoRepository.findAll();
     }
 
-    @Override
-    public List<Todo> getAllByState(String state) { 
-        return todoRepository.findAllByState(state);
-    }
 
     @Override
     public long save(Todo todo) {
